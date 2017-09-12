@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Javascipt编程入门·新大</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="./public/vue.min.js"></script>
+    <link rel="stylesheet" href="./public/style.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div class="main-header">
+        <div class="container">
+            <h1>JavaScript编程入门</h1>
+        </div>
+    </div>
+    <div class="container">
+        <div id="app">
+            <div class="col-md-8">
+                <div class="media">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">想跟老师说的话</h3>
+                        </div>
+                        <div class="panel-body">
+                            <label>个人姓名</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="你的大名" v-model="name">
+                            </div>
+                            <br>
+                            <label>新大账号</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="新生大学注册时用的手机号或邮箱" v-model="account">
+                            </div>
+                            <br>
+                            <label>想说的话</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="对老师说的话" v-model="content">
+                            </div>
+                            <br>
+                            <div>
+                                <div class="btn btn-default" v-on:click="sendData">submit</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="panel-body">
+            <p>111{{ teamlist }}</p>
+        </div>
+    </div>
+
+</body>
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            name: "",
+            account: "",
+            content: ""
+        },
+        methods: {
+            sendData: function () {
+                axios.post('https://js.xinshengdaxue.com/api/v1/learnJS/sayToMe', {
+                    name: app.name, // 你的名字（你要交第九次作业？一定要和前面交作业用的名字一样哟，否则我没办法统计你的作业次数）
+                    account: app.account, // 你注册新生大学的账号
+                    content: app.content // 你想对老师说的真心话
+                })
+                    .then(function (response) {
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        }
+    }
+    );
+
+        var app2 = new Vue({
+            el: "#app",
+            data: {
+                teamList:''
+            },
+            methods: {
+                setData: function () {
+                    axios.get('http://js.xinshengdaxue.com/api/v1/learnJS/course/1/words')
+                        .then(function (response) {
+                            app.teamList = response.;
+                            alert(response.data.code);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        })
+                }
+            }
+        });
+    
+        app.setData();
+    })
+    app2.getWord();
+
+</script>
+
+
+
+</html>
